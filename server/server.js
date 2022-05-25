@@ -1,6 +1,6 @@
 require('./config/mongoose.config'); 
 require('dotenv').config(); //! added for auth/auth
-const gizmoRoutes = require('./routes/gizmo.routes'); 
+const authorRoutes = require('./routes/author.routes'); 
 const userRoutes = require('./routes/user.routes'); 
 const cookieParser = require('cookie-parser'); //! added for auth/auth
 const cors = require('cors');
@@ -27,7 +27,7 @@ app.use(cors({
 app.use(cookieParser()); //! added for auth/auth
 
 // all routes must be listed here: below the express.json/urlencoded and above the port/app.listen 
-gizmoRoutes(app); 
+authorRoutes(app); 
 userRoutes(app); 
 
 // const port = 8000; 

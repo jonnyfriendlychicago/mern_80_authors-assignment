@@ -1,16 +1,18 @@
-// ! findReplace all "Gizmo" with "YourNewEntityName" or whatever your new thing is 
-// ! THEN do similar find replace for "gizmo" Make sure lower case
+// ! findReplace all "Author" with "YourNewEntityName" or whatever your new thing is 
+// ! THEN do similar find replace for "author" Make sure lower case
 import React, {useEffect} from 'react'
-// import {useState} from 'react';  //! added for onDemand Sort stuff, not working presently
+import {useState} from 'react';  //! added for onDemand Sort stuff, not working presently
 import {Link} from 'react-router-dom'; 
 import axios from 'axios';
 import {Container, Row, Card, Button
     // , Form //! added for onDemand Sort stuff, not working presently
 } from 'react-bootstrap'; 
 
-const GizmoListCmp = (props) => {
+const AuthorListCmp = (props) => {
     
-    const {removeFromDom, gizmoList, gizmoListSetter} = props;
+    // const {removeFromDom, authorList, authorListSetter} = props;
+
+    const [authorList, authorListSetter] = useState([]); 
 
     // const [data, setData] = useState([]); //! added for onDemand Sort stuff, not working presently
     // const [sortType, setSortType] = useState('stringFieldOne');  //! added for onDemand Sort stuff, not working presently
@@ -23,9 +25,9 @@ const GizmoListCmp = (props) => {
     //         numberField: 'numberField'
     //       };
     //       const sortProperty = types[type];
-    //       const sorted = [...gizmoList].sort((a, b) => b[sortProperty] - a[sortProperty]);
+    //       const sorted = [...authorList].sort((a, b) => b[sortProperty] - a[sortProperty]);
     //     //   setData(sorted);
-    //     gizmoListSetter(sorted);
+    //     authorListSetter(sorted);
     //     };
     
     //     sortArray(sortType);
@@ -34,26 +36,27 @@ const GizmoListCmp = (props) => {
     
     useEffect(()=>{
     	axios
-            .get("http://localhost:8000/api/gizmos")
+            .get("http://localhost:8000/api/authors")
             .then((res)=>{
                 
-                gizmoListSetter(res.data);
+                authorListSetter(res.data);
             })
             .catch((err)=>{console.log(err)})
-    }, [gizmoListSetter])
+    }, [authorListSetter])
 
     
     
-    const handleDelete = (id) => {
-        axios
-            .delete('http://localhost:8000/api/gizmos/' + id)
-            .then(res => {
-                removeFromDom(id)
-            })
-            .catch(err => console.log(err))
-    }
+    // const handleDelete = (id) => {
+    //     axios
+    //         .delete('http://localhost:8000/api/authors/' + id)
+    //         .then(res => {
+    //             removeFromDom(id)
+    //         })
+    //         .catch(err => console.log(err))
+    // }
     
     return (
+        <main>
         <Container> 
             {/* <Row>
                 
@@ -83,31 +86,31 @@ const GizmoListCmp = (props) => {
             
             <Card style = {{width: '95%', padding: '1rem', border: "0.1rem solid grey",  marginBottom: "0.5rem"}} > 
             <Row>
-                <h2>Gizmos home</h2>
+                <h2>Authors</h2>
                 {
-                    gizmoList.map((gizmoInstance, index)=>{
+                    authorList.map((authorInstance, index)=>{
                     return (
                         <Card key={index} style = {{width: '15rem', padding: '0.5rem', border: "0.1rem solid grey",  margin: "0.25rem"}} >
-                            <p>{gizmoInstance.createdAt}</p>
-                            <p>{gizmoInstance.stringFieldOne}</p>
-                            <p>{gizmoInstance.numberField}</p>
-                            {gizmoInstance.isBoolean ? <p>ISboolean</p> : <p>isNOTboolean</p>}
-                            <p> {gizmoInstance.enumString}</p>
+                            <p>{authorInstance.createdAt}</p>
+                            <p>{authorInstance.stringFieldOne}</p>
+                            <p>{authorInstance.numberField}</p>
+                            {authorInstance.isBoolean ? <p>ISboolean</p> : <p>isNOTboolean</p>}
+                            <p> {authorInstance.enumString}</p>
                             <p>listField:</p>
-                            <p>{gizmoInstance.listField && gizmoInstance.listField.join(';')}</p>
+                            <p>{authorInstance.listField && authorInstance.listField.join(';')}</p>
                             {/* TRYING AGAIN WITH MAP APPROACH...  */}
                             {/* <ul>
                                 {
-                                    gizmoInstance.listField.map((listFieldEntry.stringFieldOne, index) => {
+                                    authorInstance.listField.map((listFieldEntry.stringFieldOne, index) => {
                                         <li key={index}>
                                             {listFieldEntry}
                                         </li>
                                     })
                                 }
                             </ul> */}
-                            <Link to={`/gizmos/${gizmoInstance._id}`}>Details</Link>
-                            {/* <Link to={`/gizmos/edit/${gizmoInstance._id}`}>Edit</Link> */}
-                            {/* <Button onClick={(e)=>{handleDelete(gizmoInstance._id)}}>Delete</Button> */}
+                            <Link to={`/authors/${authorInstance._id}`}>Details</Link>
+                            {/* <Link to={`/authors/edit/${authorInstance._id}`}>Edit</Link> */}
+                            {/* <Button onClick={(e)=>{handleDelete(authorInstance._id)}}>Delete</Button> */}
                         </Card>
                     )
                     })
@@ -115,7 +118,8 @@ const GizmoListCmp = (props) => {
             </Row>
             </Card>
         </Container>
+        </main>
     )
 }; 
 
-export default GizmoListCmp;
+export default AuthorListCmp;

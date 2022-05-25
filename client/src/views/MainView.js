@@ -1,24 +1,25 @@
-// ! findReplace all "Gizmo" with "YourNewEntityName" or whatever your new thing is 
-// ! THEN do similar find replace for "gizmo" Make sure lower case
+// ! findReplace all "Author" with "YourNewEntityName" or whatever your new thing is 
+// ! THEN do similar find replace for "author" Make sure lower case
 import React, { useState } from 'react'
-import GizmoFormCmp from '../components/GizmoFormCmp';
-import GizmoListCmp from '../components/GizmoListCmp';
+import AuthorFormCmp from '../components/AuthorFormCmp';
+import AuthorListCmp from '../components/AuthorListCmp';
+import {Link} from 'react-router-dom'; 
 
 const MainView = (props) => {
     
-    const [gizmoList, gizmoListSetter] = useState([]);
+    const [authorList, authorListSetter] = useState([]);
 
     const removeFromDom = id => {
-        gizmoListSetter(gizmoList.filter(gizmo => gizmo._id !== id )); 
+        authorListSetter(authorList.filter(author => author._id !== id )); 
     }
     
     return (
         <main>
-            <div className="row_flex_left">
-                <GizmoFormCmp gizmoList={gizmoList} gizmoListSetter={gizmoListSetter} />
+            <div className='slimNavAtTopBetween'>
+                <Link to={'/authors/new'}>Add an Author</Link>
             </div>
             <div className="row_flex_left">
-                <GizmoListCmp gizmoList={gizmoList} gizmoListSetter={gizmoListSetter} removeFromDom={removeFromDom} />
+                <AuthorListCmp authorList={authorList} authorListSetter={authorListSetter} removeFromDom={removeFromDom} />
             </div>
         </main>
     )
